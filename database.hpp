@@ -1,12 +1,5 @@
-//Created by Mitchell Barker
-//3-12-16
-//Password breaking tools
-
-
 #ifndef DATABASE	
 #define DATABASE
-
-
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -41,18 +34,10 @@ string my_compute_hash(string passwd);
 
 
 
-// //lengthy munge check
-// map<char, char> munge{{'A','@'},{'B','8'},{'C','('},{'D','6'},{'E','3'},{'F','#'},{'G','9'},{'H','#'},{'I','1'},{'K','<'},{'L','I'},
-// 	{'N','^'},{'O','0'},{'Q','9'},{'S','$'},{'T','7'},{'V','>'},{'X','%'},{'Y','?'},{'@','4'},{'#','4'},{'$','5'},{'>','<'},
-// 	{'1','!'},{'4','^'},{'7','+'},{'8','3'}};
 
-//shortened munge check
-map<char, char> munge{{'A','@'},{'B','3'},{'E','3'},{'G','9'},{'I','1'},{'L','1'},
-	{'O','0'},{'S','$'},{'T','7'},{'$','5'},{'1','!'}};
-
-
-//*******************************Class declarations************************///
-//User class for holding invididual info
+ map<char, char> munge{{'A','@'},{'B','8'},{'C','('},{'D','6'},{'E','3'},{'F','#'},{'G','9'},{'H','#'},{'I','1'},{'K','<'},{'L','I'},
+ 	{'N','^'},{'O','0'},{'Q','9'},{'S','$'},{'T','7'},{'V','>'},{'X','%'},{'Y','?'},{'@','4'},{'#','4'},{'$','5'},{'>','<'},
+ 	{'1','!'},{'4','^'},{'7','+'},{'8','3'}};
 class User {
 public:
 	string last_name, first_name, user_name, hash_val, salt;
@@ -70,7 +55,6 @@ public:
 
 };
 
-//Database is collection of users
 class Database{
 public:
 	vector<User> db;
@@ -89,9 +73,6 @@ public:
 
 
 };
-//**********************End class declarations***********************//
-
-//********************User member functions**************************************//
 User::User(string last,string first, string user,uint u, string hash,string s){
 	last_name = last;
 	first_name = first;
@@ -144,10 +125,6 @@ ostream &operator<<(ostream &output, const User &U){
 
 	return output;
 }
-
-//**************************End User functions****************************************//
-
-//**************************Database functions****************************************//
 Database::Database(string input_file){
 	ifstream file(input_file.c_str());
 
@@ -259,11 +236,6 @@ ostream &operator<<(ostream &output, const Database &d){
 
 	return output;
 }
-
-//************************************Global functions*****************************//
-
-
-//**************munge functions: find permutations of passwords********///
 string next_munge(string original, string cur){
 	int i = cur.length() -1;
 	do{
@@ -317,7 +289,6 @@ char munge_char(char c){
 	return c;
 }
 
-//*************functions for brute search****************///
 bool same_chars(const std::string& s) {
     return s.find_first_not_of(s[0]) == std::string::npos;
 }
@@ -343,9 +314,6 @@ char next_char(char cur){
 		++cur;
 	return cur;
 }
-
-
-
 
 
 
@@ -405,8 +373,6 @@ string add_capital(string s){
 
 }
 
-
-//adds at least one capital and one special char
 string gen_password(string dict, int length, int capitals=1, int nonalpha=1){
 	srand(time(NULL));
 	string word = rand_word(dict, length);
@@ -420,9 +386,6 @@ string gen_password(string dict, int length, int capitals=1, int nonalpha=1){
 }
 
 
-
-
-//MD5 Hashing functions////////////////////////
 string my_compute_hash(string passwd) {
 	MD5_CTX context;
 	unsigned char digest[16];
@@ -438,5 +401,4 @@ string my_compute_hash(string passwd) {
 
     return md5string;
 }
-//**************************************End Global functions*****************************//
 #endif
